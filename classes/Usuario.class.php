@@ -57,8 +57,29 @@ Class Usuario extends TipoPessoa implements iUsuario{
         return false;
     }
 
-    public function getDados( int $id_usuario ): array {
+    public function delete():bool{
+        if ( $this->id ) {
+			$stmt = $this->prepare('DELETE FROM usuario WHERE id = :id');
+			if ($stmt->execute([':id'=>$this->id])) {
+		    return true;
+			} 
+            else {
+				return false;
+			}
+		} 
+        else {
+			return false;
+		}
+	}
 
+    public function getAll(): array{
+		$stmt = $this->prepare('SELECT * FROM usuario');
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+
+    public function getDados( int $id_usuario):array
+	{
         
-    }
+	}
 }
